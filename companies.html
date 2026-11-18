@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobFinder — Companies</title>
+    <link href="vendor/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="vendor/bootstrap.bundle.min.js"></script>
+    <script defer src="data.js"></script>
+    <script type="module" src="app.js"></script>
+</head>
+<body data-page="companies">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <header id="site-header"></header>
+
+    <main id="main">
+        <div class="container api-banner" aria-live="polite">
+            <span id="api-status">Preparing remote jobs…</span>
+            <button id="api-retry" type="button" class="btn btn-sm btn-outline-primary" hidden>Retry</button>
+            <small>Jobs provided by <a href="https://remotive.com" target="_blank" rel="noopener noreferrer">Remotive</a>.</small>
+        </div>
+        <section class="page-header">
+            <div class="container">
+                <span class="eyebrow">MEET YOUR FUTURE TEAM</span>
+                <h1>Top Employers</h1>
+                <p>Discover companies and explore their open positions.</p>
+            </div>
+        </section>
+
+        <section class="container section-space" aria-labelledby="companies-title">
+            <div class="section-heading">
+                <h2 id="companies-title">Explore Companies</h2>
+                <div class="company-search">
+                    <label for="company-search" class="visually-hidden">Search companies</label>
+                    <input id="company-search" class="form-control" type="search"
+                           placeholder="Search companies..." maxlength="100">
+                </div>
+            </div>
+
+            <p id="company-count" role="status" aria-live="polite"></p>
+            <div id="company-list" class="companies-grid"></div>
+            <p id="company-empty" class="panel empty-state" hidden>No companies found.</p>
+        </section>
+    </main>
+
+    <footer id="site-footer"></footer>
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

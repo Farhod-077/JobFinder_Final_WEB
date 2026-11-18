@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobFinder — Find a Job</title>
+    <link href="vendor/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="vendor/bootstrap.bundle.min.js"></script>
+    <script defer src="data.js"></script>
+    <script type="module" src="app.js"></script>
+</head>
+<body data-page="jobs">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <header id="site-header"></header>
+
+    <main id="main">
+        <div class="container api-banner" aria-live="polite">
+            <span id="api-status">Preparing remote jobs…</span>
+            <button id="api-retry" type="button" class="btn btn-sm btn-outline-primary" hidden>Retry</button>
+            <small>Jobs provided by <a href="https://remotive.com" target="_blank" rel="noopener noreferrer">Remotive</a>.</small>
+        </div>
+        <section class="page-header">
+            <div class="container">
+                <span class="eyebrow">FIND YOUR NEXT OPPORTUNITY</span>
+                <h1>Find Your Dream Job</h1>
+                <p>Search, compare and save opportunities that fit your goals.</p>
+            </div>
+        </section>
+
+        <div class="container section-space">
+            <div class="jobs-layout">
+                <aside class="panel filters-panel" aria-labelledby="filters-title">
+                    <h2 id="filters-title" class="h4">Filter Jobs</h2>
+
+                    <form id="filters-form">
+                        <div class="field">
+                            <label for="job-search">Search</label>
+                            <input id="job-search" class="form-control" type="search"
+                                   placeholder="Title or keyword" maxlength="100">
+                        </div>
+
+                        <div class="field">
+                            <label for="filter-location">Location</label>
+                            <select id="filter-location" class="form-select">
+                                <option value="">All locations</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="filter-category">Category</label>
+                            <select id="filter-category" class="form-select">
+                                <option value="">All categories</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="filter-company">Company</label>
+                            <select id="filter-company" class="form-select">
+                                <option value="">All companies</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="filter-type">Employment</label>
+                            <select id="filter-type" class="form-select">
+                                <option value="">All types</option>
+                                <option>Full-time</option>
+                                <option>Part-time</option>
+                                <option>Internship</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="filter-mode">Work mode</label>
+                            <select id="filter-mode" class="form-select">
+                                <option value="">All modes</option>
+                                <option>Office</option>
+                                <option>Hybrid</option>
+                                <option>Remote</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="filter-source">Source</label>
+                            <select id="filter-source" class="form-select">
+                                <option value="">All sources</option><option value="api">Remotive</option>
+                                <option value="demo">Demo</option><option value="custom">My jobs</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="min-salary">Minimum monthly salary (USD)</label>
+                            <input id="min-salary" type="number" min="0" max="100000" class="form-control" aria-describedby="salary-filter-help salary-filter-error">
+                        </div>
+                        <div class="field">
+                            <label for="max-salary">Maximum monthly salary (USD)</label>
+                            <input id="max-salary" type="number" min="0" max="100000" class="form-control" aria-describedby="salary-filter-help salary-filter-error">
+                            <small id="salary-filter-help" class="muted">Salary filters and ordering compare demo/local USD monthly salaries. Remote salary text is excluded from ranges and sorted last.</small>
+                            <small id="salary-filter-error" class="field-error" role="status"></small>
+                        </div>
+                        <div class="form-check mb-4">
+                            <input id="saved-only" class="form-check-input" type="checkbox">
+                            <label class="form-check-label" for="saved-only">
+                                Saved jobs only
+                            </label>
+                        </div>
+
+                        <button id="reset-filters" type="button"
+                                class="btn btn-outline-primary w-100">Reset Filters</button>
+                    </form>
+                    <button id="clear-favorites" type="button" class="btn btn-outline-secondary w-100 mt-3">Clear Saved Jobs</button>
+                </aside>
+
+                <section class="jobs-main" aria-labelledby="results-title">
+                    <div class="results-toolbar">
+                        <div>
+                            <h2 id="results-title" class="h4">Available Jobs</h2>
+                            <p id="results-count" role="status" aria-live="polite"></p>
+                        </div>
+
+                        <div>
+                            <label for="job-sort" class="visually-hidden">Sort jobs</label>
+                            <select id="job-sort" class="form-select">
+                                <option value="newest">Newest first</option>
+                                <option value="salary-desc">Highest salary</option>
+                                <option value="salary-asc">Lowest salary</option>
+                                <option value="title">Title A–Z</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <p id="saved-unavailable" class="muted" role="status"></p>
+                    <details class="panel saved-search-panel mb-4">
+                        <summary>Saved Searches</summary>
+                        <form id="save-search-form" class="saved-search-form">
+                            <label for="search-name">Name this search</label>
+                            <input id="search-name" class="form-control" maxlength="40" placeholder="For example: Remote design">
+                            <button class="btn btn-primary" type="submit">Save Current Filters</button>
+                        </form>
+                        <div id="saved-search-list"></div>
+                    </details>
+                    <div id="job-list" class="job-grid"></div>
+
+                    <nav id="pagination" class="pagination-bar" aria-label="Job pages">
+                        <button id="previous-page" type="button" class="btn btn-outline-primary">Previous</button>
+                        <span id="page-label" aria-live="polite"></span>
+                        <button id="next-page" type="button" class="btn btn-outline-primary">Next</button>
+                        <label for="page-size">Per page</label>
+                        <select id="page-size" class="form-select"><option>6</option><option>12</option><option>24</option></select>
+                    </nav>
+                    <div id="empty-state" class="panel empty-state" hidden>
+                        <h3>No jobs found</h3>
+                        <p>Try another keyword or clear your filters.</p>
+                        <button id="empty-reset" class="btn btn-primary" type="button">
+                            Clear Filters
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <section class="section-space" aria-labelledby="table-title">
+                <h2 id="table-title" class="h4 mb-3">Openings Summary Table</h2>
+                <div class="table-container">
+                    <table class="table align-middle mb-0">
+                        <caption>Current page of results. Demo/local salaries are monthly USD; Remotive salaries keep their original units.</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Position</th>
+                                <th scope="col">Company</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Employment</th>
+                                <th scope="col">Work mode</th>
+                                <th scope="col">Salary</th>
+                            </tr>
+                        </thead>
+                        <tbody id="jobs-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer id="site-footer"></footer>
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

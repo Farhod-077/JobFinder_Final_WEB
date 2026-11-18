@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobFinder — Dashboard</title>
+    <link href="vendor/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="vendor/bootstrap.bundle.min.js"></script>
+    <script defer src="data.js"></script>
+    <script type="module" src="app.js"></script>
+</head>
+<body data-page="dashboard">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <header id="site-header"></header>
+
+    <main id="main">
+        <div class="container api-banner" aria-live="polite">
+            <span id="api-status">Preparing remote jobs…</span>
+            <button id="api-retry" type="button" class="btn btn-sm btn-outline-primary" hidden>Retry</button>
+            <small>Jobs provided by <a href="https://remotive.com" target="_blank" rel="noopener noreferrer">Remotive</a>.</small>
+        </div>
+        <section class="page-header"><div class="container">
+            <span class="eyebrow">UNDERSTAND THE OPPORTUNITIES</span><h1>Job Dashboard</h1>
+            <p>Statistics for this site's loaded data, not the entire job market.</p>
+        </div></section>
+        <div class="container section-space">
+            <div id="dashboard-stats" class="stats-grid"></div>
+            <div class="dashboard-grid section-space">
+                <section class="panel" aria-labelledby="category-heading"><h2 id="category-heading" class="h4">Jobs by Category</h2><div id="category-chart"></div></section>
+                <section class="panel" aria-labelledby="mode-heading"><h2 id="mode-heading" class="h4">Jobs by Work Mode</h2><div id="mode-chart"></div></section>
+            </div>
+            <section class="panel"><h2 class="h4">Comparable Salaries</h2><p id="salary-summary" class="mb-0"></p></section>
+        </div>
+    </main>
+
+    <footer id="site-footer"></footer>
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

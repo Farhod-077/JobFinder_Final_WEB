@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobFinder — Home</title>
+    <link href="vendor/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="vendor/bootstrap.bundle.min.js"></script>
+    <script defer src="data.js"></script>
+    <script type="module" src="app.js"></script>
+</head>
+<body data-page="home">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <header id="site-header"></header>
+
+    <main id="main">
+        <div class="container api-banner" aria-live="polite">
+            <span id="api-status">Preparing remote jobs…</span>
+            <button id="api-retry" type="button" class="btn btn-sm btn-outline-primary" hidden>Retry</button>
+            <small>Jobs provided by <a href="https://remotive.com" target="_blank" rel="noopener noreferrer">Remotive</a>.</small>
+        </div>
+        <section class="hero">
+            <div class="container">
+                <span class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</span>
+                <h1>Find Your <span>Dream Job</span> Today</h1>
+                <p>Discover opportunities, explore companies and save your next career move.</p>
+
+                <form id="home-search" class="search-box">
+                    <label for="home-query" class="visually-hidden">Search jobs</label>
+                    <input id="home-query" type="search"
+                           placeholder="Job title, keywords, or company..." maxlength="100">
+                    <button class="btn btn-primary" type="submit">Search Jobs</button>
+                </form>
+
+                <p id="home-stats" class="hero-stats"></p>
+            </div>
+        </section>
+
+        <section class="container section-space" aria-labelledby="categories-title">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">EXPLORE OPPORTUNITIES</span>
+                    <h2 id="categories-title">Popular Categories</h2>
+                </div>
+                <a href="jobs.html" class="text-link">Browse all jobs →</a>
+            </div>
+            <div id="category-list" class="categories-grid"></div>
+        </section>
+
+        <section class="container section-space" aria-labelledby="featured-title">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">FRESH OPPORTUNITIES</span>
+                    <h2 id="featured-title">Latest Jobs</h2>
+                </div>
+            </div>
+            <div id="featured-jobs" class="job-grid"></div>
+        </section>
+    </main>
+
+    <footer id="site-footer"></footer>
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
