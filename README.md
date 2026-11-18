@@ -109,8 +109,8 @@ Unit tests cover the Job class, filters, sorting and storage. DOM tests cover pa
 
 Upload the contents of this folder to the repository, keeping `index.html` at its root. Enable GitHub Pages for the main branch and root folder, or upload the folder to Netlify. Test the published URL before submission.
 
-- Website: not published yet — add the deployed URL here.
-- Repository: add the team's repository URL here.
+- Website: https://farhod-077.github.io/JobFinder_Final_WEB/
+- Repository: https://github.com/Farhod-077/JobFinder_Final_WEB
 
 ## Limits
 
